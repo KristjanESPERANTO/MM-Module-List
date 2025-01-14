@@ -1,0 +1,57 @@
+name: Update JSON
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check Label
+        id: check-label
+        run: |
+          if ! jq -e '.issue.labels | map(select(.name == "add")) | any' "$GITHUB_EVENT_PATH"; then
+            echo "This issue does not have the 'add' label. Exiting."
+            exit 0
+          fi
+
+      - name: Extract Issue Inputs
+        id: extract-issue
+        run: |
+          echo "MODULE_NAME=$(jq -r '.issue.title' $GITHUB_EVENT_PATH | sed 's/\[Add\] Module: //')" >> $GITHUB_ENV
+          echo "MODULE_CATEGORY=$(jq -r '.issue.body // empty | .[] | select(.label==\"Category\") | .value' $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+          echo "MODULE_URL=$(jq -r '.issue.body // empty | .[] | select(.label==\"URL\") | .value' $GITHUB_ENV)
+          echo "MODULE_ID=$(jq -r '.issue.body // empty | .[] | select(.label==\"URL\") | .value | split(\"/\")[-2:] | join(\"/\")' $GITHUB_ENV)
+          echo "MODULE_MAINTAINER=$(jq -r '.issue.body // empty | .[] | select(.label==\"Maintainer\") | .value' $GITHUB_ENV)
+          echo "MODULE_MAINTAINER_URL=$(jq -r '.issue.body // empty | .[] | select(.label==\"Maintainer URL\") | .value' $GITHUB_ENV)
+          echo "MODULE_DESCRIPTION=$(jq -r '.issue.body // empty | .[] | select(.label==\"Description\") | .value' $GITHUB_ENV)
+
+      - name: Update JSON
+        run: node ./scripts/add_module.js
+        env:
+          MODULE_NAME: ${{ env.MODULE_NAME }}
+          MODULE_CATEGORY: ${{ env.MODULE_CATEGORY }}
+          MODULE_URL: ${{ env.MODULE_URL }}
+          MODULE_ID: ${{ env.MODULE_ID }}
+          MODULE_MAINTAINER: ${{ env.MODULE_MAINTAINER }}
+          MODULE_MAINTAINER_URL: ${{ env.MODULE_MAINTAINER_URL }}
+          MODULE_DESCRIPTION: ${{ env.MODULE_DESCRIPTION }}
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ./_list/modules.base.json
+          git commit -m "Add module $MODULE_NAME"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

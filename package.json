@@ -1,0 +1,23 @@
+{
+  "name": "mm-module-list",
+  "version": "0.0.1",
+  "main": "add_module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KristjanESPERANTO/MM-Module-List.git"
+  },
+  "keywords": [
+    "MagicMirror",
+    "modules"
+  ],
+  "author": "Kristjan ESPERANTO",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KristjanESPERANTO/MM-Module-List/issues"
+  },
+  "homepage": "https://github.com/KristjanESPERANTO/MM-Module-List#readme",
+  "description": "3rd party module list for MagicMirror²."
+}

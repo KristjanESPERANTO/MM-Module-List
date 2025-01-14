@@ -1,0 +1,39 @@
+name: Add New Module
+description: Use this template to suggest a new module.
+title: "[Add] Module: {{ name }}"
+labels: [add, module]
+body:
+  - type: dropdown
+    attributes:
+      label: Category
+      description: Select the appropriate category for this module.
+      options:
+        - Development / Core MagicMirror²
+        - Education
+        - Entertainment / Misc
+        - Finance
+        - Health
+        - News / Information
+        - Outdated Modules
+        - Religion
+        - Sports
+        - Transport / Travel
+        - Utility / IoT / 3rd Party / Integration
+        - Voice Control
+        - Weather
+  - type: input
+    attributes:
+      label: URL
+      description: Provide the URL to the module's repository.
+  - type: input
+    attributes:
+      label: Maintainer
+      description: Name of the maintainer or organization.
+  - type: input
+    attributes:
+      label: Maintainer URL
+      description: URL of the maintainer's GitHub, GitLab, Bitbucket, or other profile. No personal websites.
+  - type: input
+    attributes:
+      label: Description
+      description: Provide a brief description of the module's purpose.

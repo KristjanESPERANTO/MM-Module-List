@@ -1,0 +1,25 @@
+name: New Issue
+description: Use this template to report a new issue.
+title: "[Issue] {{ brief description }}"
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: Describe the problem in as much detail as possible.
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce the issue?
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      description: What happened instead?
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: Add any other relevant information (e.g., screenshots, log output).
