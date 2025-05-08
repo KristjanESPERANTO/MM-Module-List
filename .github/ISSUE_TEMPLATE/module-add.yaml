@@ -1,6 +1,6 @@
 name: Add New Module
-description: Use this template to suggest a new module.
-title: "[Add] Module: {{ name }}"
+description: Use this template to add a new module. If all fields are properly filled out, an PR will be created automatically.
+title: "[Add] Module: MMM-{{ module_name }}"
 labels: [add, module]
 body:
   - type: dropdown
