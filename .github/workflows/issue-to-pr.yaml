@@ -1,0 +1,17 @@
+name: Issue to PR
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  add-module:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Run script to process issue
+      run: node scripts/process_issue.js
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ISSUE_PAYLOAD: ${{ toJson(github.event.issue) }}
